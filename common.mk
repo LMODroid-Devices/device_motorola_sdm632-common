@@ -40,7 +40,7 @@ PRODUCT_COMPRESSED_APEX := false
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-lineage
+    $(LOCAL_PATH)/overlay-lmodroid
 
 # A/B updater
 AB_OTA_POSTINSTALL_CONFIG += \
