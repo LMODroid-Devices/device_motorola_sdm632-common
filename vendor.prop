@@ -74,6 +74,9 @@ debug.media.codec2=2
 # Color Mode
 vendor.display.enable_default_color_mode=1
 
+# Dex
+pm.dexopt.shared=quicken
+
 # Display
 ro.sf.hwc_set_default_colormode=true
 debug.renderengine.backend=skiaglthreaded
@@ -102,6 +105,16 @@ ro.oem_unlock_supported=1
 # Rank OMX SW codecs lower than OMX HW codecs
 debug.stagefright.omx_default_rank.sw-audio=1
 debug.stagefright.omx_default_rank=0
+
+# LMKD/PSI
+ro.lmk.use_psi=true
+ro.lmk.low=1001
+ro.lmk.medium=800
+ro.lmk.critical=0
+ro.lmk.critical_upgrade=true
+ro.lmk.upgrade_pressure=40
+ro.lmk.downgrade_pressure=60
+ro.lmk.kill_heaviest_task=false
 
 # Perf
 ro.vendor.extension_library=libqti-perfd-client.so
