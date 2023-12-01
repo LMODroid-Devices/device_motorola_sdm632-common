@@ -36,23 +36,14 @@ DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
     $(LOCAL_PATH)/overlay-lmodroid
 
+PRODUCT_ENFORCE_RRO_TARGETS := *
+
 # A/B updater
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
     POSTINSTALL_PATH_system=system/bin/otapreopt_script \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
-
-PRODUCT_PACKAGES += \
-    otapreopt_script \
-    update_engine \
-    update_engine_sideload \
-    update_verifier
-
-# The following modules are included in debuggable builds only.
-PRODUCT_PACKAGES_DEBUG += \
-    bootctl \
-    update_engine_client
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
@@ -88,8 +79,8 @@ PRODUCT_COPY_FILES += \
 # Bluetooth
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0.vendor \
-    audio.bluetooth.default \
     android.hardware.bluetooth.audio-impl:32 \
+    audio.bluetooth.default \
     libbt-vendor \
     vendor.qti.hardware.btconfigstore@1.0.vendor
 
@@ -111,11 +102,6 @@ PRODUCT_PACKAGES += \
     libbson.vendor \
     libxml2 \
     vendor.qti.hardware.camera.device@1.0:64
-
-# Codec2 modules
-PRODUCT_PACKAGES += \
-    com.android.media.swcodec \
-    libsfplugin_ccodec
 
 # Dalvik
 $(call inherit-product, frameworks/native/build/phone-xhdpi-4096-dalvik-heap.mk)
@@ -164,6 +150,8 @@ ifeq ($(WITH_GMS),true)
 GMS_MAKEFILE=gms_minimal.mk
 endif
 
+PRODUCT_GMS_CLIENTID_BASE := android-motorola
+
 # GPS
 PRODUCT_PACKAGES += \
     android.hardware.gnss@2.0-impl-qti:64 \
@@ -186,7 +174,6 @@ PRODUCT_PACKAGES += \
 
 # GMS
 PRODUCT_GMS_CLIENTID_BASE := android-motorola
-WITH_GMS_FI := true
 
 # Health
 PRODUCT_PACKAGES += \
@@ -212,21 +199,23 @@ PRODUCT_PACKAGES += \
 
 # Init
 PRODUCT_PACKAGES += \
+    fstab.qcom
+
+PRODUCT_PACKAGES += \
     init.class_main.sh \
-    init.mmi.usb.sh \
     init.qcom.early_boot.sh \
     init.qcom.post_boot.sh \
-    init.qcom.sensors.sh \
     init.qcom.sh \
-    init.qti.qseecomd.sh \
+    init.qcom.sensors.sh \
+    init.qti.qseecomd.sh
+
+PRODUCT_PACKAGES += \
     init.hidl.sensor.rc \
+    init.mmi.rc \
     init.mmi.chipset.rc \
     init.mmi.overlay.rc \
-    init.mmi.usb.rc \
-    init.mmi.rc \
     init.qcom.rc \
     init.target.rc \
-    fstab.qcom \
     ueventd.qcom.rc
 
 # IPACM
@@ -249,7 +238,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@4.0.vendor
 
-# LED packages
+# Lights
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-service.msm8953
 
@@ -270,6 +259,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     MotoActions \
     MotoCommonOverlay
+
+# netmgrd
+PRODUCT_PACKAGES += \
+    android.system.net.netd@1.1.vendor
 
 # Network
 PRODUCT_PACKAGES += \
@@ -321,23 +314,6 @@ PRODUCT_PACKAGES += \
     libprotobuf-cpp-full-vendorcompat \
     libprotobuf-cpp-lite-vendorcompat
 
-# QCOM
-PRODUCT_PACKAGES += \
-    libqti_vndfwk_detect \
-    libvndfwk_detect_jni.qti \
-    libvndfwk_detect_jni.qti.vendor
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/telephony_product_privapp-permissions-qti.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/telephony_product_privapp-permissions-qti.xml \
-    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml \
-    $(LOCAL_PATH)/configs/qti_whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/qti_whitelist.xml
-
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    ro.vendor.qti.va_aosp.support=1
-
-PRODUCT_ODM_PROPERTIES += \
-    ro.vendor.qti.va_odm.support=1
-
 # OMX
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
@@ -356,16 +332,23 @@ PRODUCT_PACKAGES += \
     android.hardware.power@1.2.vendor \
     vendor.qti.hardware.perf@2.0.vendor
 
+# QCOM
+PRODUCT_PACKAGES += \
+    libqti_vndfwk_detect \
+    libvndfwk_detect_jni.qti \
+    libvndfwk_detect_jni.qti.vendor
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/telephony_product_privapp-permissions-qti.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/telephony_product_privapp-permissions-qti.xml \
+    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml \
+    $(LOCAL_PATH)/configs/qti_whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/qti_whitelist.xml
+
 # QMI
 PRODUCT_PACKAGES += \
     libjson
 
 # Radio
 PRODUCT_PACKAGES += \
-    android.hardware.radio@1.4.vendor \
-    android.hardware.radio.config@1.2.vendor \
-    android.hardware.radio.deprecated@1.0.vendor \
-    android.system.net.netd@1.1.vendor \
     librmnetctl \
     libprotobuf-cpp-full
 
@@ -380,10 +363,15 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.renderscript@1.0-impl
 
+# RIL
+PRODUCT_PACKAGES += \
+    android.hardware.radio@1.4.vendor \
+    android.hardware.radio.config@1.2.vendor \
+    android.hardware.radio.deprecated@1.0.vendor
+
 # Seccomp
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/seccomp/mediacodec-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
-    $(LOCAL_PATH)/seccomp/mediaextractor-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy
+    $(LOCAL_PATH)/seccomp/mediacodec-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy
 
 # Sensors
 PRODUCT_PACKAGES += \
@@ -404,9 +392,9 @@ PRODUCT_SOONG_NAMESPACES += \
 QCOM_SOONG_NAMESPACE := $(LOCAL_PATH)/qcom-caf
 
 # Speed Profiles
-PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE := true
 PRODUCT_DEX_PREOPT_BOOT_IMAGE_PROFILE_LOCATION := frameworks/base/config/boot-image-profile.txt
 PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
+PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE := true
 
 # Telephony
 PRODUCT_PACKAGES += \
@@ -419,7 +407,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     telephony-ext
 
-
 # Thermal
 PRODUCT_PACKAGES += \
     android.hardware.thermal@1.0-impl:64 \
@@ -429,31 +416,36 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libtinyxml2
 
-# Trust HAL
+# Update Engine
 PRODUCT_PACKAGES += \
-    vendor.lineage.trust@1.0-service
+    otapreopt_script \
+    update_engine \
+    update_engine_sideload \
+    update_verifier
+
+PRODUCT_PACKAGES_DEBUG += \
+    bootctl \
+    update_engine_client
 
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service
+    android.hardware.usb@1.3-service-qti \
+    init.qcom.usb.rc \
+    init.qcom.usb.sh
+
+PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/usb/etc
 
 # Vibrator
 PRODUCT_PACKAGES += \
     android.hardware.vibrator@1.0-impl \
     android.hardware.vibrator@1.0-service
 
-# Verity
-# PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/platform/soc/7824900.sdhci/by-name/system
-# PRODUCT_VENDOR_VERITY_PARTITION := /dev/block/platform/soc/7824900.sdhci/by-name/vendor
-# $(call inherit-product, build/target/product/verity.mk)
-
 # VNDK
 # Update this list with what each blob is actually for
 # libstdc++: camera.msm8953
 PRODUCT_PACKAGES += \
     libstdc++.vendor \
-    libgui_vendor:32 \
-    vndk_package
+    libgui_vendor:32
 
 PRODUCT_COPY_FILES += \
     prebuilts/vndk/v32/arm/arch-arm-armv7-a-neon/shared/vndk-sp/libutils.so:$(TARGET_COPY_OUT_VENDOR)/lib/libutils-v32.so \
@@ -473,8 +465,11 @@ PRODUCT_PACKAGES += \
     libqsap_sdk \
     libwifi-hal-qcom \
     libwpa_client \
-    wcnss_service \
     wificond \
     WifiOverlay \
     wpa_supplicant \
-    wpa_supplicant.conf \
+    wpa_supplicant.conf
+
+# WCNSS
+PRODUCT_PACKAGES += \
+    wcnss_service
