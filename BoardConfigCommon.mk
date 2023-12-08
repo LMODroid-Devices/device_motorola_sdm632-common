@@ -171,7 +171,7 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := \
 TARGET_PROVIDES_LIBLIGHT := true
 
 # NFC / ODM
-ODM_MANIFEST_SKUS := nfc
+ODM_MANIFEST_SKUS += nfc
 ODM_MANIFEST_NFC_FILES := $(PLATFORM_PATH)/odm_manifest_nfc.xml
 
 # Partitions
@@ -207,7 +207,6 @@ TARGET_VENDOR_PROP += $(PLATFORM_PATH)/vendor.prop
 
 # RIL
 ENABLE_VENDOR_RIL_SERVICE := true
-CUSTOM_APNS_FILE := $(PLATFORM_PATH)/configs/sprint_apns.xml
 
 # Recovery
 TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/rootdir/etc/fstab.qcom
