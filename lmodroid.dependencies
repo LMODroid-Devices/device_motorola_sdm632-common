@@ -1,13 +1,16 @@
 [
   {
+    "remote": "lineage",
     "repository": "android_kernel_motorola_sdm632",
     "target_path": "kernel/motorola/sdm632"
   },
   {
+    "remote": "lineage",
     "repository": "android_external_bson",
     "target_path": "external/bson"
   },
   {
+    "remote": "lineage",
     "repository": "android_hardware_motorola",
     "target_path": "hardware/motorola"
   }
