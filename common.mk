@@ -56,7 +56,8 @@ PRODUCT_PACKAGES += \
     libaacwrapper \
     libaudio-resampler \
     libqcomvoiceprocessing \
-    libvolumelistener
+    libvolumelistener \
+    libstagefright_softomx_plugin.vendor
 
 PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/a2dp_in_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_in_audio_policy_configuration.xml \
@@ -96,6 +97,10 @@ PRODUCT_PACKAGES += \
     libbson.vendor \
     vendor.qti.hardware.camera.device@1.0:64
 
+# Configstore
+PRODUCT_PACKAGES += \
+    disable_configstore
+
 # Dalvik
 $(call inherit-product, frameworks/native/build/phone-xhdpi-4096-dalvik-heap.mk)
 
@@ -123,7 +128,8 @@ PRODUCT_PACKAGES += \
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey \
-    android.hardware.drm@1.3.vendor
+    android.hardware.drm@1.3.vendor \
+    libhidlmemory.vendor
 
 # Fingerprint
 PRODUCT_PACKAGES += \
@@ -131,7 +137,8 @@ PRODUCT_PACKAGES += \
 
 # Gatekeeper
 PRODUCT_PACKAGES += \
-    android.hardware.gatekeeper@1.0.vendor
+    android.hardware.gatekeeper@1.0.vendor \
+    libion.vendor
 
 # FM
 PRODUCT_PACKAGES += \
@@ -150,6 +157,7 @@ PRODUCT_PACKAGES += \
     android.hardware.gnss@2.0-impl-qti:64 \
     android.hardware.gnss@2.0-service-qti \
     libbatching \
+    libcurl.vendor \
     libgeofencing \
     libgnss \
     libgnsspps \
@@ -162,8 +170,7 @@ PRODUCT_PACKAGES += \
     gps.conf \
     izat.conf \
     lowi.conf \
-    sap.conf \
-    xtwifi.conf
+    sap.conf
 
 # GMS
 PRODUCT_GMS_CLIENTID_BASE := android-motorola
@@ -338,7 +345,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     CarrierConfigOverlay \
     librmnetctl \
-    libprotobuf-cpp-full
+    libprotobuf-cpp-full \
+    libsqlite.vendor
 
 # Recovery
 TARGET_RECOVERY_DENSITY := xhdpi
@@ -351,7 +359,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.radio@1.4.vendor \
     android.hardware.radio.config@1.2.vendor \
-    android.hardware.radio.deprecated@1.0.vendor
+    android.hardware.radio.deprecated@1.0.vendor \
+    libsysutils.vendor
 
 # Seccomp
 PRODUCT_COPY_FILES += \
@@ -361,7 +370,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.frameworks.sensorservice@1.0.vendor \
     android.hardware.sensors@1.0-impl:64 \
-    android.hardware.sensors@1.0-service
+    android.hardware.sensors@1.0-service \
+    libpower.vendor
 
 # Shims
 PRODUCT_PACKAGES += \
@@ -422,8 +432,10 @@ PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/usb/etc
 
 # Vibrator
 PRODUCT_PACKAGES += \
-    android.hardware.vibrator@1.0-impl \
-    android.hardware.vibrator@1.0-service
+    vendor.qti.hardware.vibrator.service
+
+PRODUCT_COPY_FILES += \
+    vendor/qcom/opensource/vibrator/excluded-input-devices.xml:$(TARGET_COPY_OUT_VENDOR)/etc/excluded-input-devices.xml
 
 # VNDK
 # Update this list with what each blob is actually for
